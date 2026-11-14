@@ -2,6 +2,10 @@
 
 <a id="top"></a>
 
+Research framework for grouping similar file chunks before lossless compression with LZ4 or Zstandard.
+
+基于相似文件块分组的无损压缩实验框架，支持 LZ4 和 Zstandard。
+
 <p align="center">
 	<a href="#readme-中文"><img src="https://img.shields.io/badge/中文-点击切换-1f6feb?style=for-the-badge" alt="切换到中文" /></a>
 	<a href="#readme-english"><img src="https://img.shields.io/badge/English-Switch-238636?style=for-the-badge" alt="Switch to English" /></a>
