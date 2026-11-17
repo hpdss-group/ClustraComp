@@ -24,13 +24,19 @@ Research framework for grouping similar file chunks before lossless compression 
 
 ### 项目简介
 
-本项目是一个基于 C 语言实现的文件块特征提取与聚类压缩实验框架。
-它实现了两套特征分组策略（Odess 与 Palantir），并提供顺序基线压缩对照，用于评估聚类分组对压缩率与性能的影响。
+ClustraComp 是用 C 实现的文件块聚类压缩实验框架。它将 Odess 和 Palantir 的块相似性检测方法用于分组无损压缩，并与按文件顺序分组的基线比较压缩比和运行时间。
 
 核心流程分为两阶段：
 
 1. 特征提取与分组
 2. 分组压缩与结果分析
+
+### 方法来源与实现
+
+- **Odess（IEEE ICDE 2021）**通过基于内容的采样提取用于检测块相似性的特征。Xiangyu Zou 等，[Odess: Speeding up Resemblance Detection for Redundancy Elimination by Fast Content-Defined Sampling](https://doi.org/10.1109/ICDE51399.2021.00048)。
+- **Palantir（ACM ASPLOS 2024）**使用分层超特征匹配不同相似程度的数据块。Hongming Huang 等，[Palantir: Hierarchical Similarity Detection for Post-Deduplication Delta Compression](https://doi.org/10.1145/3620665.3640353)。
+
+ClustraComp 的两种模式共用 AVX2 向量化的子特征提取实现。Palantir 模式在此基础上构建三层超特征。框架根据匹配结果将相似块收集到同一组，使用 LZ4 或 Zstandard 压缩每组，并通过 OpenMP 并行处理各组。
 
 ---
 
@@ -223,13 +229,19 @@ GROUP_CORE=-1
 
 ### Overview
 
-This project is a C-based experimentation framework for chunk-level feature extraction and clustered compression.
-It implements two grouping strategies (Odess and Palantir) and compares them against a sequential baseline to evaluate compression ratio and performance improvements.
+ClustraComp is a C-based framework for experiments with clustered file compression. It adapts chunk similarity detection from Odess and Palantir to grouped lossless compression and measures compression ratio and runtime against a baseline that groups chunks in file order.
 
 The workflow has two stages:
 
 1. Feature extraction and grouping
 2. Grouped compression and result analysis
+
+### Prior Work and Implementation
+
+- **Odess (IEEE ICDE 2021)** uses content-defined sampling to extract features for detecting similar chunks. Xiangyu Zou et al., [Odess: Speeding up Resemblance Detection for Redundancy Elimination by Fast Content-Defined Sampling](https://doi.org/10.1109/ICDE51399.2021.00048).
+- **Palantir (ACM ASPLOS 2024)** uses hierarchical super-features to match chunks at different degrees of similarity. Hongming Huang et al., [Palantir: Hierarchical Similarity Detection for Post-Deduplication Delta Compression](https://doi.org/10.1145/3620665.3640353).
+
+Both ClustraComp modes share an AVX2-vectorized subfeature extraction implementation. The Palantir mode builds three levels of super-features from those subfeatures. ClustraComp groups similar chunks using the matches and compresses each group with LZ4 or Zstandard, processing groups in parallel with OpenMP.
 
 ---
 
