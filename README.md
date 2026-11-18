@@ -11,6 +11,30 @@ Research framework for grouping similar file chunks before lossless compression 
 	<a href="#readme-english"><img src="https://img.shields.io/badge/English-Switch-238636?style=for-the-badge" alt="Switch to English" /></a>
 </p>
 
+### NPC 2026 论文 / Paper
+
+[Similarity-Aware Client-Side Reordering for Server-Side Storage Compression in Distributed File Systems](https://arxiv.org/abs/2611.22847)  
+Yuanhong Huang, Zicong Chen, Yili Ma, Jinwu Yang, Yulong Chen, Guangming Tan, Dingwen Tao  
+[NPC 2026](https://npc-conference.github.io/accepted-papers/) · [arXiv:2611.22847](https://arxiv.org/abs/2611.22847)
+
+<details>
+<summary>BibTeX</summary>
+
+```bibtex
+@misc{huang2026similarityaware,
+  title = {Similarity-Aware Client-Side Reordering for Server-Side Storage Compression in Distributed File Systems},
+  author = {Yuanhong Huang and Zicong Chen and Yili Ma and Jinwu Yang and Yulong Chen and Guangming Tan and Dingwen Tao},
+  year = {2026},
+  eprint = {2611.22847},
+  archivePrefix = {arXiv},
+  primaryClass = {cs.DC},
+  note = {Accepted at NPC 2026},
+  url = {https://arxiv.org/abs/2611.22847}
+}
+```
+
+</details>
+
 ---
 
 <a id="readme-中文"></a>
@@ -25,6 +49,8 @@ Research framework for grouping similar file chunks before lossless compression 
 ### 项目简介
 
 ClustraComp 是用 C 实现的文件块聚类压缩实验框架。它将 Odess 和 Palantir 的块相似性检测方法用于分组无损压缩，并与按文件顺序分组的基线比较压缩比和运行时间。
+
+NPC 2026 [论文](https://arxiv.org/abs/2611.22847)在 SkyFS 客户端对相似数据块重排，由服务端的 OpenZFS 使用 Zstandard 压缩。与按逻辑顺序写入相比，实验中物理存储占用最多减少 42.9%。
 
 核心流程分为两阶段：
 
@@ -230,6 +256,8 @@ GROUP_CORE=-1
 ### Overview
 
 ClustraComp is a C-based framework for experiments with clustered file compression. It adapts chunk similarity detection from Odess and Palantir to grouped lossless compression and measures compression ratio and runtime against a baseline that groups chunks in file order.
+
+The [NPC 2026 paper](https://arxiv.org/abs/2611.22847) evaluates client-side reordering in SkyFS with Zstandard compression on the OpenZFS storage servers. The reordered writes used up to 42.9% less physical storage than writes in logical order.
 
 The workflow has two stages:
 
